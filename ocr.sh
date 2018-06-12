@@ -69,19 +69,15 @@ for i in pg_*.pdf; do
     echo "[*] normalize ${pref}"
     convert "${pref}.png" -modulate 120,0 "${pref}.ok.png"
     echo "[*] ocr ${pref}"
-    tesseract "${pref}.ok.png" "${pref}" -l "${tlang:=fra}"
-
-    if [[ "${spell}" = true || -n "${alang}" ]]; then
-        aspell check "${pref}.txt" -l "${alang:=fr}"
-    fi
+    tesseract "${pref}.ok.png" "${pref}" -l "${tlang:=eng}" pdf
 done
-
 echo "[*] cleaning"
 rm pg_*.png
-rm pg_*.pdf
 
 if [[ "${concat}" = true ]]; then
-    echo "[*] concatenating pages into '${fdir}/${fdir}.txt'"
-    cat pg_*.txt > "${fdir}.txt"
-    rm pg_*.txt
+    echo "[*] concatenating pages into '${fdir}/${fdir}.pdf'"
+    pdftk $(ls ${fdir} -1v *pdf) cat ${fdir} ${fdir}.pdf
+    #cat pg_*.txt > "${fdir}.txt"
+    rm pg_*.pdf
 fi
+echo "Conversion Done!!!"
