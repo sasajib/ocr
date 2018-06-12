@@ -76,7 +76,7 @@ rm pg_*.png
 
 if [[ "${concat}" = true ]]; then
     echo "[*] concatenating pages into '${fdir}/${fdir}.pdf'"
-    pdftk $(ls ${fdir} -1v *pdf) cat ${fdir} ${fdir}.pdf
+    pdftk $(ls -1v *pdf) cat output ${fdir}.pdf
     #cat pg_*.txt > "${fdir}.txt"
     rm pg_*.pdf
 fi
