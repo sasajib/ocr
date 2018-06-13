@@ -24,6 +24,14 @@ To OCR a PDF file
 ocr.sh document.pdf
 ```
 
+```bash
+ocr.sh -t eng document.pdf
+```
+
+```bash
+ocr.sh -t eng -c document.pdf
+```
+
 
 Output files
 ------------
