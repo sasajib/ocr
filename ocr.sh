@@ -67,11 +67,13 @@ for i in pg_*.pdf; do
     echo "[*] convert ${pref}"
     gs -r300 -dINTERPOLATE -q -dNOPAUSE -sDEVICE=png16m -sOutputFile="${pref}.png" ${i} -c quit
     echo "[*] normalize ${pref}"
-    convert "${pref}.png" -modulate 120,0 "${pref}.ok.png"
+    #convert "${pref}.png" -modulate 120,0 "${pref}.ok.png"
+    convert -density 300 "${pref}.png" -depth 8 -strip -background white -alpha off "${pref}.ok.tiff"
     echo "[*] ocr ${pref}"
-    tesseract "${pref}.ok.png" "${pref}" -l "${tlang:=eng}" pdf
+    tesseract "${pref}.ok.tiff" "${pref}" -l "${tlang:=eng}" pdf
 done
 echo "[*] cleaning"
+rm pg_*.tiff
 rm pg_*.png
 
 if [[ "${concat}" = true ]]; then
